@@ -1,0 +1,79 @@
+%% Допущение
+\newtheorem{assumption}{\hspace{\parindent}Д\,о\,п\,у\,щ\,е\,н\,и\,е\,}
+
+%% Допущение
+\newtheorem{purpose}{\hspace{\parindent}Ц\,е\,л\,ь\, \ \,у\,п\,р\,а\,в\,л\,е\,н\,и\,я\,}
+
+%%  Теорема
+\newtheorem{theorem}{\hspace{\parindent}\sl{Т\,е\,о\,р\,е\,м\,а\,}}
+
+%%  Следствие 
+\newtheorem{corollary}{\hspace{\parindent}\sl{С\,л\,е\,д\,с\,т\,в\,и\,е\,}}
+
+%%  Лемма
+\newtheorem{lemma}{\hspace{\parindent}\sl{Л\,е\,м\,м\,а\,}}
+
+%%  Утверждение
+\newtheorem{statement}{\hspace{\parindent}\sl{У\,т\,в\,е\,р\,ж\,д\,е\,н\,и\,е\,}}
+
+%%  Предложение
+\newtheorem{proposition}{\hspace{\parindent}\sl{П\,р\,е\,д\,л\,о\,ж\,е\,н\,и\,е\,}}
+
+%%  Определение
+\newtheorem{definition}{\hspace{\parindent}\sl{О\,п\,р\,е\,д\,е\,л\,е\,н\,и\,е\,}}
+
+%%  Задача
+\newtheorem{problem}{\hspace{\parindent}\sl{З\,а\,д\,а\,ч\,а\,}}
+
+%%  Доказательство
+\newenvironment{proof}
+{\vspace{1pt}\par{\sl% 
+Д\,о\,к\,а\,з\,а\,т\,е\,л\,ь\,с\,т\,в\,о.\,\ }}%
+{\noindent\vspace{1pt}} 
+
+%%  Доказательство теоремы
+\newenvironment{proofoftheorem}[1]
+{\vspace{1pt}\par{\sl% 
+Д\,о\,к\,а\,з\,а\,т\,е\,л\,ь\,с\,т\,в\,о\ \ т\,е\,о\,р\,е\,м\,ы\, #1.}}%
+{\noindent\vspace{1pt}} 
+
+%%  Доказательство следствия
+\newenvironment{proofofcorollary}[1]
+{\vspace{1pt}\par{\sl% 
+Д\,о\,к\,а\,з\,а\,т\,е\,л\,ь\,с\,т\,в\,о\  с\,л\,е\,д\,с\,т\,в\,и\,я\, #1.}}%
+{\noindent\vspace{1pt}} 
+
+%%  Доказательство леммы
+\newenvironment{proofoflemma}[1]
+{\vspace{1pt}\par{\sl% 
+Д\,о\,к\,а\,з\,а\,т\,е\,л\,ь\,с\,т\,в\,о\ \  л\,е\,м\,м\,ы\, #1.}}%
+{\noindent\vspace{1pt}} 
+
+%%  Доказательство утверждения
+\newenvironment{proofofstatement}[1]
+{\vspace{1pt}\par{\sl% 
+Д\,о\,к\,а\,з\,а\,т\,е\,л\,ь\,с\,т\,в\,о\ \ у\,т\,в\,е\,р\,ж\,д\,е\,н\,и\,я\, #1.}}%
+{\noindent\vspace{1pt}} 
+
+%%  Доказательство предложения
+\newenvironment{proofofproposition}[1]
+{\vspace{1pt}\par{\sl% 
+Д\,о\,к\,а\,з\,а\,т\,е\,л\,ь\,с\,т\,в\,о\, п\,р\,е\,д\,л\,о\,ж\,е\,н\,и\,я\, #1.}}%
+{\noindent\vspace{1pt}} 
+
+%%  Алгоритм
+\newtheorem{alg}{\hspace{\parindent}\sl{А\,л\,г\,о\,р\,и\,т\,м\,}}%
+\newenvironment{algorithm}[1][\unskip]{\begin{alg}[#1]\em}{\end{alg}}%
+\def\thealgorithm{\thealg}
+
+%%  Замечание
+\newtheorem{rem}{\hspace{\parindent}\sl{З\,а\,м\,е\,ч\,а\,н\,и\,е}}
+\newenvironment{remark}[1][\unskip]{\begin{rem}[#1]\em}{\end{rem}}%
+\def\theremark{\therem}
+
+%%  Пример
+\newtheorem{exmpl}{\hspace{\parindent}\sl{П\,р\,и\,м\,е\,р\,}}%
+\newenvironment{example}[1][\unskip]{\begin{exmpl}[#1]\em}{\end{exmpl}}%
+\def\theexample{\theexmpl}
+
+

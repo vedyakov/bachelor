@@ -1,0 +1,141 @@
+\NeedsTeXFormat{LaTeX2e}
+
+\RequirePackage{ifthen}
+\RequirePackage{eso-pic}
+\RequirePackage{graphicx}
+\RequirePackage{everyshi}
+\RequirePackage{lastpage}
+\RequirePackage{epsfig}
+\RequirePackage{psfrag}
+
+\ProvidesPackage{G2-104-68}
+         [2002/12/12 v0.01 GOST Frames]
+
+%%% Ќастройки дл€ фоновых рамок
+\newcommand\BackgroundPicture[2]{%
+ \setlength{\unitlength}{1pt}%
+ \put(0,\strip@pt\paperheight){%
+ \parbox[t][\paperheight]{\paperwidth}{%
+ \vfill
+ \hfill\includegraphics[angle=#2]{#1}\hspace{0.5cm}
+ \vfill
+}}} %
+\newcommand\BackgroundTitlePicture[2]{%
+ \setlength{\unitlength}{1pt}%
+ \put(0,\strip@pt\paperheight){%
+ \parbox[t][\paperheight]{\paperwidth}{%
+ \vfill
+ \centering\includegraphics[angle=#2]{#1}\hspace{-1cm}
+ \vfill
+}}} %
+
+\newcounter{gostszv}
+\newcounter{gostszvv}
+\newlength{\gostorigline}%
+\newlength{\gostadnomin}%
+\newsavebox{\newgostboxik}%
+
+% ƒл€ вывода текста в бокс с указанными координатами углов
+% 1,2 координаты x,y левого нижнего угла, 3,4 правого верхнего угла
+% 5 выравнивание 6 текст
+\def\spbox#1#2#3#4#5#6{%
+  \put(#1,#2){%
+	\setcounter{gostszv}{#3}%
+	\setcounter{gostszvv}{#4}%
+	\setcounter{gostszv}{\value{gostszv}-#1}%
+	\setcounter{gostszvv}{\value{gostszvv}-#2}%
+	\makebox(\value{gostszv},\value{gostszvv})[#5]{#6}%
+	}%
+}
+
+\def\spformedbox#1#2#3#4#5#6{%
+	\setcounter{gostszv}{#3}%
+	\setcounter{gostszvv}{#4}%
+	\setcounter{gostszv}{\value{gostszv}-#1}%
+	\setcounter{gostszvv}{\value{gostszvv}-#2}%
+	\setlength{\gostadnomin}{#3pt - #1pt}%ширина пол€
+	{%
+	\sbox{\newgostboxik}{#6}%
+	\settowidth{\gostorigline}{\usebox{\newgostboxik}}%
+	\put(#1,#2){%
+		\ifthenelse{\lengthtest{\gostorigline<\gostadnomin}}%
+			{\makebox(\value{gostszv},\value{gostszvv})[#5]%
+			{\usebox{\newgostboxik}}}%
+			{\makebox(\value{gostszv},\value{gostszvv})[#5]%
+			{\resizebox{\gostadnomin}{\height}{\usebox{\newgostboxik}}}}%
+	}%
+	}%
+}
+
+% ¬ывод текста в вертикальный бокс
+\def\vspbox#1#2#3#4#5#6{%
+  \put(#1,#2){%
+	  \setcounter{gostszv}{#3}%
+	  \setcounter{gostszvv}{#4}%
+	  \setcounter{gostszv}{\value{gostszv}-#1}%
+	  \setcounter{gostszvv}{\value{gostszvv}-#2}%
+	  \begin{sideways}%
+	  \makebox(\value{gostszv},\value{gostszvv})[#5]{#6}%
+	  \end{sideways}%
+	}%
+}%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Ќижний колонтитул. «аполн€ем рамки текстом. 
+%  оординаты задаютс€ в pt, соответствующие координатам в просмотре
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\let\@oldoddfoot\@oddfoot
+\def\@oddfoot{%
+  \unitlength=1pt
+  \begin{picture}(0,0)(105,82)
+    \renewcommand\Large{\@setfontsize\LARGE{10}{11}}
+	\ifnum \thepage = 1
+    \else
+    \ifnum \thepage = 3
+    % ¬тора€ страница
+		\spbox{539}{66}{594}{79}{c}{\pageref{LastPage}}
+		\spbox{496}{66}{537}{79}{c}{\thepage}
+		\spformedbox{118}{77}{184}{93}{l}{\textsl{\small\@gostrazrabotchik}}
+		\spformedbox{118}{62}{184}{80}{l}{\textsl{\small\@gostproveril}}
+		\spformedbox{118}{35}{184}{51}{l}{\textsl{\small\@gostnormokontroler}}
+		\spformedbox{118}{20}{184}{37}{l}{\textsl{\small\@gostutverdil}}
+		\spbox{261}{90}{593}{140}{c}{\LARGE{\@gostklgi}}
+		\spbox{258}{22}{444}{99}{c}{\parbox{65mm}{\centering\small{\@gosttitleobject \\ \@gosttitledocument}}}
+		\spbox{504}{19}{540}{69}{c}{\parbox{40mm}{\centering\small{\@gosttitlecompany}}}
+		\spbox{460}{70}{460}{74}{c}{\@gostlitera}
+	\else
+    % ѕоследующие страницы
+		\spbox{523}{22}{553}{45}{c}{\thepage}
+		\spbox{558}{22}{590}{45}{c}{\pageref{LastPage}}
+		\spbox{227}{22}{564}{65}{c}{\LARGE{\@gostklgi}}
+		\spbox{70}{770}{268}{865}{c}{\LARGE{\rotatebox{180}{\@gostklgi}}}
+	\fi
+    \fi
+  \end{picture}
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% ѕосле вывода  каждой страницы выполн€ем следующий код
+%% ƒл€ вывода рамок
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\pathtosharedresource{frames/}
+\EveryShipout{%
+  \ClearShipoutPicture{%
+  \ifnum \thepage = 1
+	% \AddToShipoutPicture{\BackgroundTitlePicture{\pathtosharedresource title_7.eps}{0}}
+  \else
+  \ifnum \thepage = 2
+	% \AddToShipoutPicture{\BackgroundTitlePicture{\pathtosharedresource title_7.eps}{0}}
+  \else
+  \ifnum \thepage = 3
+%параметры второго листа
+	\AddToShipoutPicture{\BackgroundPicture{\pathtosharedresource itmo_frame_1_2}{0}}
+  \else
+%параметры остальных листов
+    \AddToShipoutPicture{\BackgroundPicture{\pathtosharedresource itmo_frame_2_2}{0}}
+  \fi
+  \fi
+}%
+}
+\let\@evenfoot\@oddfoot
+\let\@evenhead\@oddhead

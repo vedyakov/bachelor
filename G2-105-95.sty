@@ -1,0 +1,319 @@
+\NeedsTeXFormat{LaTeX2e}
+
+\RequirePackage{multicol}	% Многоколоночность
+\RequirePackage{textcomp}	% Ввод различных знаков
+\RequirePackage{floatflt}
+\RequirePackage{float}
+\RequirePackage{rotating}	% Вращение объектов
+\RequirePackage{calc}		% Для возможности численных расчетов
+
+\RequirePackage{ifthen}
+\RequirePackage{geometry}	% Для остановки плавающих объектов
+\RequirePackage{indentfirst}	% Начинать абзацы с красной строки
+\RequirePackage{caption}
+\RequirePackage{longtable}
+\RequirePackage{footnpag}	% Внешний вид сносок
+\RequirePackage[bottom]{footmisc}  %Для установки сносок всегда внизу страницы 
+
+\ProvidesPackage{G2-105-95}
+         [2002/12/12 v0.01 General reqs.]
+
+\renewcommand\large{\@setfontsize\large{14}{14}\selectfont}
+\renewcommand\Large{\@setfontsize\Large{16}{17}\selectfont}
+\renewcommand\Large{\@setfontsize\LARGE{15}{15}\selectfont}
+\renewcommand\small{\@setfontsize\small{12}{12}\selectfont}
+\renewcommand\normalsize{\@setfontsize\normalsize{14}{19}\selectfont}
+
+% Центрированные подписи к рисункам
+%\captionstyle{centerlast}
+
+% Центрирование подписей к рисункам
+% \renewenvironment{figure}
+%              {\captionstyle{centerlast} \@float{figure}}
+%              {\end@float}
+
+%\renewenvironment{figure*}
+%               {\captionstyle{centerlast} \@dblfloat{figure}}
+%               {\end@dblfloat}
+
+
+% FIXME: не получается переопределить окружение table с форматированием caption слева -- получается caption в колонку
+%\renewenvironment{table}
+%               {\@float{table} \captionstyle{flushleft}}
+%               {\end@float}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Настройки размера страницы
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%FIXME
+\ifnum 1 > 0
+	\geometry{verbose,a4paper}
+	   \setlength{\headheight}{0pt}
+	   \setlength{\headsep}{0pt}
+	   \setlength{\topmargin}{0.5cm}
+	   \setlength{\textheight}{23.0cm}
+	   \setlength{\textwidth}{16cm}
+	   \setlength{\oddsidemargin}{0.7cm}
+	   \setlength{\evensidemargin}{0pt}
+	   \setlength{\marginparsep}{0pt}
+	   \setlength{\marginparpush}{0pt}
+	   \parindent=15mm
+	   \setlength{\leftmargini}{\parindent}
+	   \addtolength{\leftmargini}{4mm}
+	   \setlength{\headheight}{0pt}
+	   \setlength{\headsep}{0pt}
+	\else
+		\parindent=15mm  % Абзацный отступ (п.3.6)
+		%\geometry{verbose, a4paper, noheadfoot, left=25mm, right=12mm, height=225mm,bottom=30mm}
+		%\geometry{verbose, a4paper, left=25mm, right=12mm, height=225mm,bottom=30mm}
+		\geometry{verbose, a4paper, left=25mm, right=12mm, height=225mm}
+		   \setlength{\headheight}{0pt}
+		   \setlength{\headsep}{0pt}
+		   \setlength{\topmargin}{-1.0cm}
+\fi
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Титульный лист
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \def\gostgrifsoglasovano#1{\gdef\@gostgrifsoglasovano{#1}} 
+  \def\gostgrifutverjdeno#1{\gdef\@gostgrifutverjdeno{#1}} 
+  \def\gosttitleobject#1{\gdef\@gosttitleobject{#1}}
+  \def\gosttitledocument#1{\gdef\@gosttitledocument{#1}} 
+  \def\gostklgi#1{\gdef\@gostklgi{#1}} 
+  \def\gosttitlecompany#1{\gdef\@gosttitlecompany{#1}} 
+  \def\gostutverdil#1{\gdef\@gostutverdil{#1}}
+  \def\gostnormokontroler#1{\gdef\@gostnormokontroler{#1}} 
+  \def\gostrazrabotchik#1{\gdef\@gostrazrabotchik{#1}} 
+  \def\gostproveril#1{\gdef\@gostproveril{#1}} 
+  \def\gostispolnitel#1{\gdef\@gostispolnitel{#1}} 
+  \def\gostlitera#1{\gdef\@gostlitera{#1}} 
+
+  \def\titleDepartment#1{\gdef\@titleDepartment{#1}} 
+  \def\titleSchollOf#1{\gdef\@titleSchollOf{#1}} 
+  \def\titleDegree#1{\gdef\@titleDegree{#1}} 
+  \def\titleСhief#1{\gdef\@titleСhief{#1}} 
+  \def\titleSubDepartment#1{\gdef\@titleSubDepartment{#1}} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Переопределение пунктов (п.4.1.3)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\addtocounter{secnumdepth}{-2}
+
+	\ifnum \c@secnumdepth < 4
+		\newcommand{\theengost}{\thesection.\@arabic\c@engost}%              
+		\newcounter{engost}[section]
+	\else                                                                         
+    	\ifnum \c@secnumdepth < 5
+			\newcommand{\theengost}{\thesubsection.\@arabic\c@engost}%
+			\newcounter{engost}[subsection]
+		\else                                                                       
+			\ifnum \c@secnumdepth < 6
+				\newcommand{\theengost}{\thesubsubsection.\@arabic\c@engost}%
+				\newcounter{engost}[subsubsection]
+			\else
+				\ifnum \c@secnumdepth < 7
+					\newcommand{\theengost}{\theparagraph.\@arabic\c@engost}%
+					\newcounter{engost}[paragraph]
+				\else
+					\ifnum \c@secnumdepth < 8
+						\newcommand{\theengost}{\thesubparagraph.\@arabic\c@engost}%
+						\newcounter{engost}[subparagraph]
+					\else
+						\newcommand{\theengost}{\@arabic\c@engost}%
+						\newcounter{engost}
+					\fi
+				\fi
+        	\fi                                                                       
+    	\fi                                                                         
+    \fi 
+	\newenvironment{engost}%
+	{%
+		\renewcommand\item{%
+			\par%
+			\refstepcounter{engost}%
+			\theengost
+			%\arabic{section}.\arabic{subsection}.\arabic{engost}%
+			\quad%
+		}%
+    }%
+
+\newcounter{ensubgost}[engost]	    			
+\renewcommand{\theensubgost}{\theengost.\arabic{ensubgost}}%              
+\newenvironment{ensubgost}
+    {%
+    \renewcommand{\item}%
+    {
+    \par%
+    \refstepcounter{ensubgost}%
+    \theensubgost%
+    \quad%
+    }
+    }%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Раздел с новой страницы
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% FIXME: \clearpage
+%	\newcommand{\gostnewpage}{\newpage}                                     
+	\newcommand{\gostnewpage}{\clearpage}                                     
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Переопределение вида разделов
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\section{%                    
+                     \renewcommand{\theengost}{\thesection.\@arabic\c@engost}
+                     \setcounter{engost}{0}
+                     \gostnewpage                    
+                     \@startsection{section}{1}{\z@}%
+                                {-3.25ex \@plus -1ex \@minus -.2ex}%                                 		
+								{1.5ex\@plus.2ex}%
+								{\normalfont\Large}}
+		
+\renewcommand\subsection{%
+                        \renewcommand{\theengost}{\thesubsection.\@arabic\c@engost}
+                         \setcounter{engost}{0}
+                         \@startsection{subsection}{2}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\Large}}
+\renewcommand\subsubsection{%
+                           \renewcommand{\theengost}{\thesubsubsection.\@arabic\c@engost}
+                           \setcounter{engost}{0}
+                            \@startsection{subsubsection}{3}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\Large}}
+\renewcommand\paragraph{%
+                       \renewcommand{\theengost}{\theparagraph.\@arabic\c@engost}
+						 \setcounter{engost}{0}
+                        \@startsection{paragraph}{4}{\parindent}%
+                                    {3.25ex \@plus1ex \@minus.2ex}%
+                                    {-1em}%
+                                    {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{%
+                          \renewcommand{\theengost}{\thesubparagraph.\@arabic\c@engost}
+						 \setcounter{engost}{0}
+                           \@startsection{subparagraph}{5}{\parindent}%
+                                       {3.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\normalfont\normalsize\bfseries}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Настройка вида подписей к рисункам и таблицам
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\renewcommand\captionmargin{0.2cm}
+% Подпись к рисунку
+%\AtBeginDocument{
+%	\addto\captionsrussian{
+%		\def\figurename{Рисуно1к}
+%	}
+%}
+\captionsetup[figure]{font=large,figurename=Рисунок,justification=centering,labelsep=endash}
+%\renewcommand*\captionlabeldelim{~--~}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% update: Подпись к рисункам
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\def\capfigure{figure}
+%\def\captable{table}
+%\long\def\@makecaption#1#2{%
+%  \vskip\abovecaptionskip
+%  \ifx\@captype\capfigure
+%      \centering #1~--~#2 \par
+%  \else
+%      #1~--~#2 \par
+%  \fi
+%  \vskip\belowcaptionskip}
+%\setlength\abovecaptionskip{2\p@}
+%\setlength\belowcaptionskip{1\p@}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Настройка номера формулы и ссылки на нее
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%FIXME: мне это не нужно.
+%  \def\@eqnnum{{\normalfont \normalcolor \theequation}}
+%  \renewcommand{\theequation}{(\arabic{equation})}%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Тире в перечислении (ненумерованном списке)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\labelitemi}{\normalfont\bfseries{--}}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Сноски со скобкой
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \renewcommand\thefootnote{\@arabic\c@footnote)}%   
+
+
+% Для выравнивания длинных таблиц
+\LTleft=\z@
+\LTright=\fill
+
+\def\LT@makecaption#1#2#3{%                                                     
+  \LT@mcol\LT@cols l{\hbox to\z@{\parbox[t]\LTcapwidth{%                    
+      \sbox\@tempboxa{#1{#2\captionlabeldelim{} }#3}%                                                
+          {\box\@tempboxa\hfil}%                                 
+          \endgraf}%                                               
+    \hss}}} 
+
+\def\NoFrames{
+\ClearShipoutPicture
+\renewcommand\BackgroundPicture[2]{}
+\let\@oddfoot\@oldoddfoot
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Исключение двусмысленных русских букв из алфавита 
+%для нумерации приложений
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\def\GostAsbuk#1{\expandafter\@GostAsbuk\csname c@#1\endcsname}                         
+\def\@GostAsbuk#1{\ifcase#1\or                                                      
+\CYRA\or\CYRB\or\CYRV\or\CYRG\or\CYRD\or\CYRE\or\CYRZH\or                     
+\CYRI\or\CYRK\or\CYRL\or\CYRM\or\CYRN\or                      
+\CYRP\or\CYRR\or\CYRS\or\CYRT\or\CYRU\or\CYRF\or\CYRH\or
+\CYRC\or\CYRSH\or\CYRSHCH\or\CYREREV\or\CYRYU\or                     
+\CYRYA\else\@ctrerr\fi}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Далее текст документа %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{gostitemize}
+  {\begin{itemize}{}
+	  %\itemsep=-1mm%
+	  \setlength{\itemindent}{\parindent}%
+	  %\addtolength{\itemindent}{5mm}%
+	  %\listparindent=25mm%
+	  %\leftmargin=15mm
+	}
+  {\end{itemize}
+
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Нумерация списков     %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\theenumi}{\asbuk{enumi}}
+\renewcommand{\theenumii}{\arabic{enumii}}
+\renewcommand\labelenumi{\theenumi}
+\renewcommand\labelenumii{\theenumii} 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%                       %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newenvironment{gostenumerate}
+{\begin{enumerate}{}
+	  %\itemsep=-1mm%
+	  %\partopsep=-2mm%
+	  %\parsep=40mm%
+	  %\topsep=40mm%
+	  %\parskip=40mm%
+	  %\setlength{\itemindent}{\parindent}%
+	  %\addtolength{\itemindent}{5mm}%
+	  %\listparindent=25mm%
+	  %\leftmargin=15mm
+	}
+{\end{enumerate}
+}

@@ -1,0 +1,402 @@
+\NeedsTeXFormat{LaTeX2e}
+\RequirePackage{G2-105-95}
+\RequirePackage{G2-104-68}
+\RequirePackage{cite}
+
+\ProvidesPackage{eskdpz}
+         [2002/12/12 v0.01 Unified system for design documentation PZ (???)]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Титульный лист
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \gosttitlecompany{}
+  \gostnormokontroler{}
+  \gostrazrabotchik{}
+  \gostproveril{}
+  \gostklgi{}
+  \gosttitledocument{}
+  \gosttitleobject{~ }
+  \gostgrifutverjdeno{}
+  \gostgrifsoglasovano{}
+  \gostutverdil{}
+  \gostispolnitel{}
+
+  
+%  собственно команды формирования титульного листа
+\renewcommand\maketitle{%
+	\begin{titlepage}%
+		\let\footnotesize\small
+		\let\footnoterule\relax
+		\let \footnote \thanks
+		%  \null\vfil
+		\begin{center}
+			%{\LARGE \@gosttitlecompany \par}%
+			%\vskip 1cm
+		\end{center}
+		\par%
+		%{%\raggedleft%
+		\begin{tabular}{l}%
+			\ignorespaces                            
+			%\@gostgrifsoglasovano
+		\end{tabular}                                                                
+		\hfill
+		\begin{tabular}{l}%
+			\ignorespaces                            
+			%\@gostgrifutverjdeno
+		\end{tabular}
+		%\vspace{1.4em}                                                               
+		\par
+		%}
+		%\vskip 60\p@
+		\begin{center}%
+			%\vskip 3em%
+			{\large%
+			\lineskip 6cm%
+			\addtolength{\parskip}{\baselineskip}
+			%      \begin{tabular}[t]{c}%
+			%        \@author
+			%		\par
+			%\LARGE{\@gosttitleobject}
+			\vspace{83mm}
+			\hspace{-1cm}{\@gosttitledocument}
+			\par
+			%\@gostklgi
+			%      \end{tabular}
+			\par
+			}%
+			\vfill
+			\begin{flushleft}
+				%\addtolength{\parskip}{\baselineskip}
+				%исполнители:
+				%\par
+				%\vskip 5pt
+				%\hskip 1cm
+				\parindent=1cm
+				%\setlength{\baselineskip}{2\baselinestretch}
+				\baselineskip=0.8cm
+				\par
+				%\begin{tabular}{l}%
+					
+					%\@gostispolnitel
+				%\end{tabular}
+			\end{flushleft}
+			\vfill
+			\vfill
+			%{\large \@date \par}%
+		\end{center}
+%		\par
+%  \
+%  \@thanks
+%  \vfil\null
+\end{titlepage}%
+  \addtocounter{page}{1}
+  \setcounter{footnote}{0}%
+  \global\let\thanks\relax
+  \global\let\maketitle\relax
+  \global\let\@thanks\@empty
+  \global\let\@author\@empty
+  \global\let\@date\@empty
+%  \global\let\@gosttitlecompany\@empty
+  \global\let\@gostgrifsoglasovano\@empty
+  \global\let\@gostgrifutverjdeno\@empty
+%  \global\let\@gostklgi\@empty
+%  \global\let\@gosttitleobject\@empty
+%  \global\let\@gosttitledocument\@empty
+  \global\let\gostgrifsoglasovano\relax
+  \global\let\gostgrifutverjdeno\relax
+  \global\let\gostklgi\relax
+  \global\let\gosttitleobject\relax
+  \global\let\gosttitledocument\relax
+  \global\let\gosttitlecompany\relax
+  \global\let\gostispolnitel\relax
+  \global\let\author\relax
+  \global\let\date\relax
+  \global\let\and\relax
+}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Центрирование содержания
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\tableofcontents{%
+\clearpage
+\begin{center}
+    \Large{Содержание}
+\end{center}    
+    \large{\@starttoc{toc}}%
+    \newpage
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Вид строчек в содержании
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*\l@sectionx[2]{%
+  \ifnum \c@tocdepth >\z@
+    \addpenalty\@secpenalty
+    %\addvspace{1em \@plus\p@}%
+    \setlength\@tempdima{1em}%
+    \begingroup
+      \@tempdima 1.7 em\relax
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode %\bfseries
+      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+      {\hspace{0cm}{#1}\nobreak }%
+      \leaders\hbox{%
+        $\m@th
+        \mkern \@dotsep mu\hbox{.} 
+		$}\hfill%
+      \nobreak%
+     \hb@xt@\@pnumwidth{\hfil\large \normalcolor #2}%
+     \par%
+    \endgroup
+  \fi}
+
+\renewcommand*\l@section[2]{%
+  \ifnum \c@tocdepth >\z@
+    \addpenalty\@secpenalty
+    %\addvspace{1em \@plus\p@}%
+    \setlength\@tempdima{1em}%
+    \begingroup
+      \@tempdima 0.5cm \relax
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode %\bfseries
+      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+      {\hspace{0cm}{#1}\nobreak }%
+      \leaders\hbox{%
+        $\m@th
+       \mkern \@dotsep mu\hbox{.} 
+		$}\hfill%
+      \nobreak%
+     \hb@xt@\@pnumwidth{\hfil\large \normalcolor #2}%
+     \par%
+    \endgroup
+  \fi}
+
+\renewcommand*\l@subsection[2]{%
+  \ifnum \c@tocdepth >\z@
+    \addpenalty\@secpenalty%
+    \setlength\@tempdima{1em}%
+    \begingroup
+      \@tempdima 0.8cm \relax
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode %\bfseries
+      \advance\leftskip \@tempdima \null\nobreak\hskip -\leftskip
+      {\hspace{0cm}{#1}\nobreak }%
+      \leaders\hbox{%
+        $\m@th
+        \mkern \@dotsep mu\hbox{.} 
+		$}\hfill%
+      \nobreak%
+     \hb@xt@\@pnumwidth{\hfil\large \normalcolor #2}%
+     \par%
+    \endgroup
+  \fi}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Команды, формирующие представление названия раздела
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Отвечает за представление номера раздела в тексте
+\newcommand{\sectname}[2]{%
+		\csname the#1\endcsname\quad
+}
+
+% Отвечает за представление номера раздела в содержании
+\newcommand{\sectnameintoc}[2]{%
+		\protect\numberline{\csname the#1\endcsname}%
+}
+
+% Команды между номером раздела и его названием
+\newcommand{\sectdop}[1]{%
+\interlinepenalty \@M%
+}
+
+%    \def\@seccntformat#1{%
+%	\ifthenelse{\equal{#1}{section}}
+%		{\appendixname ~ \csname the#1\endcsname \quad}
+%		{\csname the#1\endcsname \quad}
+%	\ifnum \z@ < 2
+%		\appendixname\ \csname the#1\endcsname \quad
+%	\else
+%		\csname the#1\endcsname \quad
+%	\fi
+%	}%
+
+%\renewcommand\sectionmark{HIHIHI}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Взято из latex.ltx и исправлено под наши требования %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\def\@sect#1#2#3#4#5#6[#7]#8{%
+  \ifnum #2>\c@secnumdepth
+    \let\@svsec\@empty
+  \else
+  % Если выводим нумерацию разделов
+    \refstepcounter{#1}%
+	% Здесь был @seccntformat
+    \protected@edef\@svsec{\sectname{#1}{#2}\relax}%
+  \fi
+  \@tempskipa #5\relax
+  \ifdim \@tempskipa>\z@
+    \begingroup
+      #6{%
+	  	
+	    % Выводится номер раздела
+        \@hangfrom{\hskip #3\relax\@svsec}%
+	% Выводится название раздела
+	\raggedright%
+          %\interlinepenalty \@M 
+	\sectdop{#2}#8
+	\@@par}%
+    \endgroup
+    \csname #1mark\endcsname{#7}%
+    \ifnum #2>\c@tocdepth \else
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+%       \ifnum #2>\c@tocdepth \else
+          \sectnameintoc{#1}{#2}%
+        \fi
+        #7}%
+    \fi
+  \else
+    \def\@svsechd{%
+	\hyphenation{#8}%
+      #6{\hskip #3\relax
+      \@svsec #8}%
+      \csname #1mark\endcsname{#7}%
+      \addcontentsline{toc}{#1}{%
+        \ifnum #2>\c@secnumdepth \else
+          \protect\numberline{\csname the#1\endcsname}%
+        \fi
+        #7}}%
+  \fi
+  \@xsect{#5}}
+\def\@xsect#1{%
+  \@tempskipa #1\relax
+  \ifdim \@tempskipa>\z@
+    \par \nobreak
+    \vskip \@tempskipa
+    \@afterheading
+  \else
+    \@nobreakfalse
+    \global\@noskipsectrue
+    \everypar{%
+      \if@noskipsec
+        \global\@noskipsecfalse
+       {\setbox\z@\lastbox}%
+        \clubpenalty\@M
+        \begingroup \@svsechd \endgroup
+        \unskip
+        \@tempskipa #1\relax
+        \hskip -\@tempskipa
+      \else
+        \clubpenalty \@clubpenalty
+        \everypar{}%
+      \fi}%
+  \fi
+  \ignorespaces}
+
+\renewcommand{\@biblabel}[1]{#1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%% Взято из bk12.clo и исправлено под наши требования %%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Настройки для 1-го уровня списка
+\def\@listi{\leftmargin\leftmargini
+%            \parsep 5\p@  \@plus2.5\p@ \@minus\p@
+            \parsep 0\p@  \@plus2.5\p@ \@minus\p@
+            \topsep 4\p@ \@plus2\p@   \@minus2\p@
+%				\topsep \z@
+%            \itemsep1\p@  \@plus2.5\p@ \@minus\p@}
+            \itemsep 1\p@}
+\let\@listI\@listi
+\@listi
+% Настройки для 2-го уровня списка
+\def\@listii {\leftmargin\leftmarginii
+              \labelwidth\leftmarginii
+              \advance\labelwidth-\labelsep
+              \topsep    1\p@   \@plus2.5\p@ \@minus\p@
+%				\topsep \z@
+              \parsep    1\p@ \@plus\p@    \@minus\p@
+              \itemsep   \parsep}
+% Настройки для 3-го уровня списка (в ГОСТ не используется)
+\def\@listiii{\leftmargin\leftmarginiii
+              \labelwidth\leftmarginiii
+              \advance\labelwidth-\labelsep
+%              \topsep    2.5\p@\@plus\p@\@minus\p@
+				\topsep \z@
+              \parsep    \z@
+              \partopsep \p@ \@plus\z@ \@minus\p@
+              \itemsep   \topsep}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Определение изменений в оформлении приложений
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand\appendix{\par
+
+%\addtocounter{tocdepth}{-1}
+\setcounter{tocdepth}{1}
+
+  \renewcommand{\section}{
+    \renewcommand{\theengost}{\thesection.\@arabic\c@engost}
+    \setcounter{engost}{0}
+    \@startsection{section}
+     {1}
+     {0mm}
+     {-\baselineskip}
+     {\baselineskip}
+     {\newpage\Large\bf\centering}}%
+
+
+   \addtocontents{toc}{\vskip 12pt }
+
+  \setcounter{section}{0}%
+  \setcounter{subsection}{0}%
+
+% Отвечает за представление названия раздела в тексте
+\renewcommand{\sectname}[2]{%
+	\ifnum ##2 > 1
+		\csname the##1\endcsname\quad
+	\else
+		\appendixname\ \csname the##1\endcsname
+	\fi
+}
+
+% Отвечает за представление названия раздела в содержании
+\renewcommand{\sectnameintoc}[2]{%
+	\ifnum ##2 > 1
+		\protect\numberline{\csname the##1\endcsname}%
+	\else
+		\protect\appendixname\ \numberline{\csname the##1\endcsname}
+	\fi
+}
+
+% Отвечает за перенесение названия раздела на другую строку в приложении
+\renewcommand{\sectdop}[1]{%
+	\ifnum ##1 > 1
+%
+	\else
+		\\
+	\fi
+}
+
+  \renewcommand{\thesection}{\GostAsbuk{section}}%
+
+% Нумерация рисунков с указанием номера приложения
+  \@addtoreset{figure}{section}%                                                   
+  \renewcommand{\thefigure}{\thesection.\arabic{figure}}%
+  
+% Нумерация таблиц с указанием номера приложения
+  \@addtoreset{table}{section}%                                                   
+  \renewcommand{\thetable}{\thesection.\arabic{table}}%
+  
+% Нумерация формул с указанием номера приложения
+  \@addtoreset{equation}{section}%                                                   
+  \renewcommand{\theequation}{(\thesection.\arabic{equation})}%
+}
