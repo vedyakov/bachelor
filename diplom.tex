@@ -18,9 +18,6 @@
 % Глубина разделов, попадающих в содержание
 \setcounter{tocdepth}{2}
 
-% Переменование "Список литературы" в "Литература"
-\renewcommand{\refname}{Литература}
-
 %\renewcommand{\rmdefault}{cmss}  Это шрифт Computer Modern Sans
 %\renewcommand{\rmdefault}{ftm} Это активируйте, если установили PSCyr
 \renewcommand\theadfont{\normalsize}
@@ -51,6 +48,9 @@
 \date{}
 
 \begin{document}
+	% Переменование "Список литературы" в "Литература"
+	\renewcommand{\refname}{Литература}
+	
 	% Первая страница это Титульный лист
 	% \maketitle команда отключена, так как титульный лист дается на кафедре
 	% Вторая страница это задание	
