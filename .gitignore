@@ -3,4 +3,4 @@
 *.tcp
 .DS_Store
 *.gz
-
+*.out
